@@ -1,6 +1,5 @@
-def main():
-    print("Hello from enterprise-knowledge-platform!")
+from app.config.settings import settings
 
-
-if __name__ == "__main__":
-    main()
+print(settings.app_name)
+print(settings.app_version)
+print(settings.app_env)
