@@ -1,12 +1,11 @@
 from fastapi import FastAPI
-from app.config import settings
 
-app = FastAPI()
+from app.api.router import api_router
+from app.config.settings import settings
 
-@app.get("/")
-def read_root():
-    return {"message": "Healthy!!"}
+app = FastAPI(
+    title=settings.app_name,
+    version=settings.app_version,
+)
 
-@app.get("/health")
-def health_check():
-    return {"status": "healthy","environmrent": "Development"}
+app.include_router(api_router)
