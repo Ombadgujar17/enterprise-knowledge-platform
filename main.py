@@ -1,5 +1,7 @@
-from app.config.settings import settings
+from app.config.logging import logger, setup_logging
 
-print(settings.app_name)
-print(settings.app_version)
-print(settings.app_env)
+setup_logging()
+
+logger.info("Application started successfully.")
+logger.warning("This is a warning.")
+logger.error("This is an error.")
