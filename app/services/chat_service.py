@@ -1,15 +1,11 @@
+from app.services.llm_service import LLMService
+
+
 class ChatService:
     """Service responsible for handling chat requests."""
 
-    def chat(self, message: str) ->str:
-        """
-        Process the user's message.
+    def __init__(self) -> None:
+        self.llm_service = LLMService()
 
-        Args:
-            message: User's input message.
-
-        Returns:
-            A placeholder response.
-        """
-
-        return f"You said: {message}"
+    def chat(self, message: str) -> str:
+        return self.llm_service.generate_response(message)

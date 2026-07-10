@@ -14,7 +14,13 @@ class Settings(BaseSettings):
 
     openai_api_key: str = ""
     google_api_key: str = ""
+    gemini_model: str = ""
     langsmith_api_key: str = ""
+
+    llm_provider: str = ""
+    llm_model: str = ""
+
+    groq_api_key: str = ""
 
     model_config = SettingsConfigDict(
         env_file=".env",
