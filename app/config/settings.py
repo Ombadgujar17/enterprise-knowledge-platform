@@ -22,6 +22,9 @@ class Settings(BaseSettings):
 
     groq_api_key: str = ""
 
+    chunk_size: int = 1000
+    chunk_overlap: int = 200
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
