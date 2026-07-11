@@ -25,6 +25,9 @@ class Settings(BaseSettings):
     chunk_size: int = 1000
     chunk_overlap: int = 200
 
+    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    chroma_db_path: str = "data/chroma"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

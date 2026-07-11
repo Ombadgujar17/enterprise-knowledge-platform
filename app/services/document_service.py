@@ -3,6 +3,8 @@ from app.models.document import DocumentUploadResponse
 from app.rag.loaders.pdf_loader import PDFLoader
 from app.rag.storage.local_storage import LocalStorage
 from app.rag.chunking.text_splitter import TextSplitter
+from app.rag.vectorstore.chroma_store import ChromaStore
+from app.services.embedding_service import EmbeddingService
 
 
 class DocumentService:
@@ -12,6 +14,10 @@ class DocumentService:
         self.storage = LocalStorage()
         self.loader = PDFLoader()
         self.splitter = TextSplitter()
+        self.embedding_service = EmbeddingService()
+        self.vector_store = ChromaStore(
+            self.embedding_service.get_embeddings()
+        )
 
     def upload_document(self, file):
         saved_file = self.storage.save(file)
@@ -19,6 +25,7 @@ class DocumentService:
         documents = self.loader.load(saved_file)
 
         chunks = self.splitter.split(documents)
+        self.vector_store.add_documents(chunks)
 
         text = "\n".join(doc.page_content for doc in documents)
 
@@ -29,11 +36,12 @@ class DocumentService:
                 )
 
         return DocumentUploadResponse(
-        filename=file.filename,
+            filename=file.filename,
             pages=len(documents),
             characters=len(text),
             chunks=len(chunks),
             preview=chunks[0].page_content[:500],
-        )
+            embedding_status="completed",
+            )
         
     
