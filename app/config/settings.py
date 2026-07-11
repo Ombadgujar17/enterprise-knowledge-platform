@@ -27,6 +27,7 @@ class Settings(BaseSettings):
 
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     chroma_db_path: str = "data/chroma"
+    chroma_collection_name: str = "enterprise_documents"
 
     model_config = SettingsConfigDict(
         env_file=".env",
