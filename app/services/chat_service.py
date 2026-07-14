@@ -1,11 +1,15 @@
-from app.services.llm_service import LLMService
+from app.services.rag_service import RAGService
 
 
 class ChatService:
-    """Service responsible for handling chat requests."""
+    """Service responsible for chat."""
 
     def __init__(self) -> None:
-        self.llm_service = LLMService()
+        self.rag_service = RAGService()
 
-    def chat(self, message: str) -> str:
-        return self.llm_service.generate_response(message)
+    def chat(
+        self,
+        message: str,
+    ) -> str:
+
+        return self.rag_service.answer(message)

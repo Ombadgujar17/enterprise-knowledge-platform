@@ -11,7 +11,7 @@ class TextSplitter:
             chunk_overlap=settings.chunk_overlap,
         )
 
-    def split(
+    def split_documents(
         self,
         documents: list[Document],
     ) -> list[Document]:

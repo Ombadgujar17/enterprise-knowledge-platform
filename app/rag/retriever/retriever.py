@@ -17,7 +17,7 @@ class Retriever:
     def retrieve(
         self,
         query: str,
-        k: int = 4,
+        k: int = 8,
     ) -> list[Document]:
         """Retrieve relevant chunks."""
 

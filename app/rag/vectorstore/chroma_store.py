@@ -29,7 +29,7 @@ class ChromaStore:
     def similarity_search(
         self,
         query: str,
-        k: int = 4,
+        k: int = 8,
     ) -> list[Document]:
         """Retrieve the most similar chunks."""
 

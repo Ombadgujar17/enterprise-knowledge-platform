@@ -16,9 +16,13 @@ class LLMService:
 
     def generate_response(self, message: str) -> str:
         """Generate a response from the LLM."""
+    
+        print("\n========== PROMPT SENT TO GROQ ==========\n")
+        print(message)
 
-        try:
-            response = self.llm.invoke(message)
-            return response.content
-        except Exception as e:
-            raise RuntimeError(f"LLM request failed: {e}")
+        response = self.llm.invoke(message)
+
+        print("\n========== RESPONSE FROM GROQ ==========\n")
+        print(response.content)
+
+        return response.content

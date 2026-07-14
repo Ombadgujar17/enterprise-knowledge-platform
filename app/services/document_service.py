@@ -5,6 +5,7 @@ from app.rag.storage.local_storage import LocalStorage
 from app.rag.chunking.text_splitter import TextSplitter
 from app.rag.vectorstore.chroma_store import ChromaStore
 from app.services.embedding_service import EmbeddingService
+from app.services.document_indexer import DocumentIndexer
 
 
 class DocumentService:
@@ -22,10 +23,9 @@ class DocumentService:
     def upload_document(self, file):
         saved_file = self.storage.save(file)
 
-        documents = self.loader.load(saved_file)
+        indexer = DocumentIndexer()
 
-        chunks = self.splitter.split(documents)
-        self.vector_store.add_documents(chunks)
+        chunks, documents = indexer.index(saved_file)
 
         text = "\n".join(doc.page_content for doc in documents)
 
