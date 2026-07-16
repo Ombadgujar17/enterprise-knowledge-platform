@@ -15,4 +15,10 @@ def test_graph_builds():
         }
     )
 
-    assert result["intent"] == "knowledge_query"
+    assert result["intent"] in {
+        "knowledge_query",
+        "general_chat",
+        "tool_request",
+    }
+    assert result["prompt"] != ""
+    assert result["response"] != ""

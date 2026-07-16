@@ -1,6 +1,6 @@
 from langchain_groq import ChatGroq
 
-
+from app.config.logging import logger
 from app.config.settings import settings
 
 
@@ -14,15 +14,21 @@ class LLMService:
             temperature=0.2,
         )
 
-    def generate_response(self, message: str) -> str:
+    def generate_response(
+        self,
+        message: str,
+    ) -> str:
         """Generate a response from the LLM."""
-    
-        print("\n========== PROMPT SENT TO GROQ ==========\n")
-        print(message)
+
+        logger.info("Sending request to Groq")
+        logger.debug("Prompt length: %d characters", len(message))
 
         response = self.llm.invoke(message)
 
-        print("\n========== RESPONSE FROM GROQ ==========\n")
-        print(response.content)
+        logger.info("Received response from Groq")
+        logger.debug(
+            "Response length: %d characters",
+            len(response.content),
+        )
 
         return response.content

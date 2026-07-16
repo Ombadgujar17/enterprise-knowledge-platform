@@ -21,13 +21,37 @@ class RAGService:
         """
 
         return self.retriever.retrieve(question)
+    
+    def build_prompt(
+        self,
+        question: str,
+        documents: list[Document],
+    ) -> str:
+        """
+        Build the RAG prompt.
+        """
+
+        return PromptService.build_rag_prompt(
+            question=question,
+            documents=documents,
+        )
+
+    def generate_response(
+        self,
+        prompt: str,
+    ) -> str:
+        """
+        Generate the final answer.
+        """
+
+        return self.llm.generate_response(prompt)
 
     def answer(
         self,
         question: str,
     ) -> str:
 
-        documents = self.retriever_documents(question)
+        documents = self.retrieve_documents(question)
 
         context = "\n\n".join(
             doc.page_content
