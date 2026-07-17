@@ -13,15 +13,12 @@ class APIClient:
         base_url: str = BACKEND_URL,
         timeout: int = REQUEST_TIMEOUT,
     ) -> None:
-        self.client = httpx.Client(
+        self._client = httpx.Client(
             base_url=base_url,
             timeout=timeout,
         )
 
     def health_check(self) -> dict:
-        response = self.client.get("/health")
+        response = self._client.get("/health")
         response.raise_for_status()
         return response.json()
-
-    def close(self) -> None:
-        self.client.close()
