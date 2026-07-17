@@ -3,6 +3,8 @@ from __future__ import annotations
 import httpx
 
 from config import BACKEND_URL, REQUEST_TIMEOUT
+from models.responses import HealthResponse
+from models.responses import DocumentUploadResponse
 
 
 class APIClient:
@@ -21,4 +23,28 @@ class APIClient:
     def health_check(self) -> dict:
         response = self._client.get("/health")
         response.raise_for_status()
-        return response.json()
+        return HealthResponse.model_validate(response.json())
+    
+    def upload_document(self, uploaded_file) -> DocumentUploadResponse:
+        """Upload a PDF document to the backend."""
+
+        files = {
+            "file": (
+                uploaded_file.name,
+                uploaded_file.getvalue(),
+                uploaded_file.type,
+            )
+        }
+
+        response = self._client.post(
+            "/documents/",
+            files=files,
+        )
+
+        response.raise_for_status()
+
+        return DocumentUploadResponse.model_validate(
+            response.json()
+        )
+
+    
