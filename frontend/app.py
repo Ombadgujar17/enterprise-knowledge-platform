@@ -6,6 +6,7 @@ from components.chat import render_chat
 from components.sidebar import render_sidebar
 from utils.session import initialize_session
 from services.upload_service import handle_document_upload
+from services.health_service import check_backend_health
 
 st.set_page_config(
     page_title="Enterprise Knowledge Assistant",
@@ -17,6 +18,8 @@ initialize_session()
 
 client = get_api_client()
 
+check_backend_health()
+
 uploaded_file, upload_clicked = render_sidebar()
 
 if upload_clicked and uploaded_file:
@@ -24,9 +27,12 @@ if upload_clicked and uploaded_file:
 
 
 # 3️⃣ Render the chat interface
-message = render_chat()
+message, selected_prompt = render_chat()
+
+if selected_prompt:
+    handle_chat_message(selected_prompt)
+    st.rerun()
 
 if message:
     handle_chat_message(message)
-
     st.rerun()
