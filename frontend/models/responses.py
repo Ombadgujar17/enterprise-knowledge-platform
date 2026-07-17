@@ -13,3 +13,7 @@ class DocumentUploadResponse(BaseModel):
     chunks: int
     preview: str
     embedding_status: str
+
+
+class ChatResponse(BaseModel):
+    response: str

@@ -3,7 +3,7 @@ from __future__ import annotations
 import httpx
 
 from config import BACKEND_URL, REQUEST_TIMEOUT
-from models.responses import HealthResponse
+from models.responses import ChatResponse, HealthResponse
 from models.responses import DocumentUploadResponse
 
 
@@ -46,5 +46,16 @@ class APIClient:
         return DocumentUploadResponse.model_validate(
             response.json()
         )
+        
+    def chat(self, message: str) -> ChatResponse:
+        response = self._client.post(
+            "/chat/",
+            json={
+                "message": message,
+            },
+        )
 
+        response.raise_for_status()
+
+        return ChatResponse.model_validate(response.json())
     
