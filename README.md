@@ -1,95 +1,331 @@
-# Enterprise Knowledge Platform
+# 🚀 Enterprise Knowledge Platform
 
-A lightweight retrieval-augmented knowledge platform (RAG) for enterprise document search, question answering, and agent orchestration. This repository provides a minimal, extensible foundation for ingesting documents, creating embeddings, storing vectors, and building graph-aware retrieval workflows for downstream conversational agents and tools.
+> An AI-powered Enterprise Knowledge Assistant built with **LangGraph**, **LangChain**, **FastAPI**, **ChromaDB**, and **Groq LLM** that enables intelligent document retrieval, agentic workflows, and real-world tool execution.
 
-Why this project
+![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.116-green)
+![LangGraph](https://img.shields.io/badge/LangGraph-Agentic_AI-orange)
+![LangChain](https://img.shields.io/badge/LangChain-RAG-blueviolet)
+![ChromaDB](https://img.shields.io/badge/VectorDB-ChromaDB-success)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-- Enables fast prototyping of RAG applications for internal knowledge, policies, and documentation.
-- Combines vector search with a graph layer to represent relationships between documents and entities.
-- Designed to be adaptable to different embedding providers, vector stores, and LLM backends.
+---
 
-Key features
+# 📖 Overview
 
-- Document ingestion and chunking utilities
-- Configurable embedding and vector-store adapters
-- Retriever and RAG orchestration layer
-- Graph builder and node models to capture relationships
-- FastAPI-based HTTP API with interactive docs
-- Modular services and agents for chat, classification, and tool orchestration
+Enterprise Knowledge Platform is a production-oriented AI assistant designed to help organizations interact with internal knowledge bases using Retrieval-Augmented Generation (RAG) and Agentic AI workflows.
 
-Repository layout
+Instead of performing simple semantic search, the platform intelligently:
 
-- app/api: FastAPI application, routers, and API models
-- app/rag: Chunking, embedding, retriever and vector store utilities
-- app/graph: Graph builder, state management, and node models
-- app/services: Business logic (chat/document orchestration)
-- app/agents: Higher-level agent patterns (intent classification, response generation)
-- app/models: Pydantic schemas for requests/responses and documents
-- data/: Raw inputs, processed artifacts, and vector store files
+- Understands user intent
+- Retrieves relevant enterprise documents
+- Generates grounded responses
+- Executes real-world actions through tools
+- Integrates with external services such as Gmail
 
-Quickstart (development)
+The architecture follows modern software engineering principles including clean architecture, modular services, reusable AI components, and separation of concerns.
 
-Prerequisites
+---
 
-- Python 3.12+
-- Git
-- (Optional) an embeddings provider and vector store for production use
+# ✨ Features
 
-Create a virtual environment and install
+## 🤖 Agentic AI Workflow
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -U pip
-pip install -e .
+- LangGraph-powered multi-node workflow
+- Intent classification
+- Dynamic routing
+- Tool execution
+- Retrieval-Augmented Generation (RAG)
+
+---
+
+## 📚 Retrieval-Augmented Generation (RAG)
+
+- PDF document ingestion
+- Intelligent chunking
+- Embedding generation
+- ChromaDB vector storage
+- Semantic similarity search
+- Context-aware answer generation
+
+---
+
+## 🧠 LLM Integration
+
+- Groq LLM
+- LangChain abstraction
+- Provider-independent architecture
+- Structured Output using Pydantic
+- Prompt engineering
+
+---
+
+## 🛠 AI Tools
+
+### 📧 Intelligent Email Assistant
+
+Supports natural language email requests such as:
+
+> Send an email to john@example.com informing him that the deployment has completed successfully.
+
+The agent automatically:
+
+- extracts recipient
+- generates subject
+- generates email body
+- validates data using Pydantic
+- sends the email through the Gmail API
+
+---
+
+## 🌐 REST API
+
+FastAPI backend exposing endpoints for:
+
+- Chat
+- Document Upload
+- Retrieval
+- Tool Execution
+- Health Monitoring
+
+---
+
+## 🖥 Frontend
+
+Streamlit interface including:
+
+- Chat interface
+- PDF upload
+- Document management
+- Backend status monitoring
+
+---
+
+# 🏗 Architecture
+
+```
+                        User
+                          │
+                          ▼
+                  Streamlit Frontend
+                          │
+                          ▼
+                     FastAPI Backend
+                          │
+                          ▼
+                     LangGraph Agent
+        ┌─────────────────┼─────────────────┐
+        ▼                 ▼                 ▼
+ Intent Classifier   General Chat      Tool Execution
+        │                                  │
+        ▼                                  ▼
+      RAG Pipeline                     Email Tool
+        │                                  │
+        ▼                                  ▼
+     ChromaDB                        Gmail API
 ```
 
-Configure environment
+---
 
-- Copy the example environment file (if present) or set required environment variables for your embedding provider, LLM endpoint, and vector store connection.
-- Common variables:
-  - EMBEDDING_PROVIDER_URL / EMBEDDING_API_KEY
-  - VECTOR_STORE_PATH or VECTOR_STORE_URL
-  - OPENAI_API_KEY or other LLM credentials
+# 🧠 Agent Workflow
 
-Run the app (development)
-
-```bash
-uvicorn app.api.app:app --reload
+```
+User Query
+     │
+     ▼
+Intent Classification
+     │
+     ├───────────────┐
+     ▼               ▼
+Knowledge Query   Tool Request
+     │               │
+     ▼               ▼
+Retrieve Docs    Email Tool
+     │               │
+     ▼               ▼
+Build Context   Gmail Service
+     │               │
+     ▼               ▼
+Generate Answer Gmail API
 ```
 
-Open the interactive API docs at http://localhost:8000/docs
+---
 
-Notes on architecture
+# 📂 Project Structure
 
-- The `app/rag` layer handles document chunking, embedding calls, and abstract vector-store operations so you can swap providers with minimal changes.
-- `app/graph` builds a lightweight graph of nodes and edges that can be used to contextualize retrieval results and support follow-up Q&A.
-- `app/services` contains the orchestration logic that ties together retrieval, prompt construction, and agent execution.
-
-Implementation status
-
-- Several modules are scaffolds/stubs and require project-specific integration (for example: `app/services/chat_service.py`, `app/rag/retriever.py`). Treat this repository as a starting point — plug in your chosen embedding provider, vector store, and LLM backend.
-
-Testing
-
-Run tests with:
-
-```bash
-pytest -q
+```
+app/
+│
+├── api/
+├── config/
+├── graph/
+├── integrations/
+├── models/
+├── rag/
+├── services/
+├── tools/
+├── utils/
+│
+frontend/
+│
+tests/
+│
+docker/
 ```
 
-Contributing
+---
 
-Contributions, issue reports, and PRs are welcome. When contributing:
+# ⚙ Tech Stack
 
-- Open an issue to discuss larger changes before writing code
-- Follow the existing code style and add tests for new behavior
-- Keep changes small and focused
+## Backend
 
-License
+- Python 3.12
+- FastAPI
+- LangChain
+- LangGraph
 
-Specify a license in the repository (e.g., MIT) — this project currently does not include a license file.
+## AI
 
-Contact
+- Groq LLM
+- ChromaDB
+- HuggingFace Embeddings
 
-Open issues or PRs on GitHub for questions, feature requests, or assistance.
+## Frontend
+
+- Streamlit
+
+## Development
+
+- Docker
+- uv
+- Ruff
+- MyPy
+- Pytest
+
+---
+
+# 🚀 Getting Started
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Ombadgujar17/enterprise-knowledge-platform.git
+cd enterprise-knowledge-platform
+```
+
+---
+
+## Install Dependencies
+
+```bash
+uv sync
+```
+
+---
+
+## Configure Environment
+
+Create a `.env`
+
+```env
+GROQ_API_KEY=your_key
+
+LLM_MODEL=llama-3.3-70b-versatile
+```
+
+---
+
+## Start Backend
+
+```bash
+uv run uvicorn app.api.app:app --reload
+```
+
+---
+
+## Start Frontend
+
+```bash
+streamlit run frontend/app.py
+```
+
+---
+
+# 📸 Screenshots
+
+> Add screenshots of:
+
+- Chat Interface
+- Document Upload
+- RAG Responses
+- Email Tool
+- LangGraph Workflow
+
+---
+
+# 🧪 Testing
+
+Run all tests
+
+```bash
+pytest
+```
+
+---
+
+# 🔮 Future Enhancements
+
+- Microsoft Outlook Integration
+- Google Calendar Integration
+- GitHub Issue Creation
+- HRMS Integration
+- Jira Integration
+- Slack Notifications
+- Microsoft Teams
+- Authentication & RBAC
+- PostgreSQL Persistence
+- LangSmith Observability
+- CI/CD Pipeline
+- Kubernetes Deployment
+
+---
+
+# 📚 Key Concepts Demonstrated
+
+- Agentic AI
+- Retrieval-Augmented Generation
+- LangGraph
+- LangChain
+- Tool Calling
+- Structured Output
+- Vector Databases
+- Embeddings
+- FastAPI
+- OAuth2
+- Gmail API
+- Software Architecture
+- Clean Code
+- Modular Design
+
+---
+
+# 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+---
+
+# 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+# 👨‍💻 Author
+
+**Om Badgujar**
+
+Aspiring AI Engineer passionate about building production-ready AI systems using Agentic AI, RAG, LLMs, and modern software engineering practices.
+
+- GitHub: https://github.com/Ombadgujar17
+- LinkedIn: *Add your LinkedIn profile here*
