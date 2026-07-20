@@ -21,34 +21,63 @@ class IntentService:
         logger.info("Starting intent classification")
 
         prompt = f"""
-You are an intent classifier.
+          You are an enterprise intent classifier.
 
-Classify the user's request into EXACTLY ONE category.
+          Your job is to classify the user's request into EXACTLY ONE of these intents.
 
-Categories:
+          Allowed intents:
 
-knowledge_query
-general_chat
-tool_request
+          - knowledge_query
+          - general_chat
+          - tool_request
 
-Rules:
+          Definitions:
 
-- knowledge_query:
-  Questions that require information from enterprise documents.
+          knowledge_query
+          - The user is asking for information that should be retrieved from company documents.
+          - Examples:
+              - What is the leave policy?
+              - Explain the onboarding process.
+              - What is the reimbursement policy?
+              - Show the HR manual.
+              - What does the employee handbook say?
 
-- general_chat:
-  Greetings, casual conversation, or questions that do not require document retrieval.
+          general_chat
+          - Greetings.
+          - Casual conversation.
+          - General AI questions.
+          - Questions that do not require company knowledge or performing actions.
+          - Examples:
+              - Hello
+              - Good morning
+              - How are you?
+              - Tell me a joke.
+              - Explain Python.
 
-- tool_request:
-  Requests to perform an action, such as creating tickets, sending notifications,
-  scheduling meetings, or executing a task.
+          tool_request
+          - The user wants the system to DO something.
+          - Examples:
+              - Create a ticket.
+              - Reset my password.
+              - My laptop is broken.
+              - VPN is not working.
+              - Printer issue.
+              - Send an email.
+              - Notify HR.
+              - Apply for leave.
+              - Schedule a meeting.
+              - Raise an incident.
 
-Return ONLY the category.
+          Return ONLY ONE of:
 
-User:
+          knowledge_query
+          general_chat
+          tool_request
 
-{question}
-"""
+          User:
+
+          {question}
+        """
 
         intent = self.llm.generate_response(prompt).strip()
 

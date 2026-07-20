@@ -5,6 +5,7 @@ from app.api.routes.documents import router as documents_router
 from app.api.routes.health import router as health_router
 from app.api.routes.retrieval import router as retrieval_router
 from app.api.routes.root import router as root_router
+from app.api.routes.tools import router as tools_router
 
 api_router = APIRouter(prefix="/api/v1")
 
@@ -13,3 +14,4 @@ api_router.include_router(health_router)
 api_router.include_router(chat_router)
 api_router.include_router(documents_router)
 api_router.include_router(retrieval_router)
+api_router.include_router(tools_router)

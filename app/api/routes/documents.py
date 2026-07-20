@@ -6,7 +6,7 @@ from app.services.document_service import DocumentService
 router = APIRouter(
     prefix="/documents",
     tags=["Documents"],
-)
+) 
 
 
 @router.post("/", response_model=DocumentUploadResponse)

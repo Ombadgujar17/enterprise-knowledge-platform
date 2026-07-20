@@ -2,6 +2,8 @@ from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from pathlib import Path
+
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
@@ -35,6 +37,9 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    # Gmail OAuth
+    gmail_credentials_path: Path = Path("credentials/gmail_client_secret.json")
+    gmail_token_path: Path = Path("credentials/token.json")
 
 @lru_cache
 def get_settings() -> Settings:
