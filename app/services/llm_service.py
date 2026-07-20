@@ -1,4 +1,7 @@
+from typing import Type
+
 from langchain_groq import ChatGroq
+from pydantic import BaseModel
 
 from app.config.logging import logger
 from app.config.settings import settings
@@ -18,7 +21,9 @@ class LLMService:
         self,
         message: str,
     ) -> str:
-        """Generate a response from the LLM."""
+        """
+        Generate a natural language response from the LLM.
+        """
 
         logger.info("Sending request to Groq")
         logger.debug("Prompt length: %d characters", len(message))
@@ -32,3 +37,31 @@ class LLMService:
         )
 
         return response.content
+
+    def structured_output(
+        self,
+        prompt: str,
+        schema: Type[BaseModel],
+    ) -> BaseModel:
+        """
+        Generate structured output validated against a Pydantic model.
+        """
+
+        logger.info(
+            "Generating structured output using schema: %s",
+            schema.__name__,
+        )
+        logger.debug(
+            "Prompt length: %d characters",
+            len(prompt),
+        )
+
+        structured_llm = self.llm.with_structured_output(schema)
+
+        response = structured_llm.invoke(prompt)
+
+        logger.info(
+            "Structured output generated successfully."
+        )
+
+        return response

@@ -23,3 +23,7 @@ logs/
 
 # Windows
 Thumbs.db
+
+# Google OAuth Credentials
+credentials/
+token.json

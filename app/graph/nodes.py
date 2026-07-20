@@ -162,9 +162,8 @@ class GraphNodes:
         )
 
         state["response"] = self.tool_service.execute(
-            intent=state["intent"],
             query=state["question"],
-        )
+)       
 
         logger.info(
             "Tool execution completed"
