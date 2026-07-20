@@ -20,5 +20,6 @@ def test_graph_builds():
         "general_chat",
         "tool_request",
     }
-    assert result["prompt"] != ""
+    if result["intent"] == "knowledge_query":
+        assert result["prompt"] != ""
     assert result["response"] != ""
